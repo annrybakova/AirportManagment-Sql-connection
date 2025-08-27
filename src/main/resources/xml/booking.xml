@@ -1,0 +1,14 @@
+<Bookings>
+    <Booking>
+        <bookingId>1</bookingId>
+        <passengerId>101</passengerId>
+        <flightId>501</flightId>
+        <bookingDate>2025-08-01</bookingDate>
+    </Booking>
+    <Booking>
+        <bookingId>2</bookingId>
+        <passengerId>102</passengerId>
+        <flightId>502</flightId>
+        <bookingDate>2025-08-05</bookingDate>
+    </Booking>
+</Bookings>

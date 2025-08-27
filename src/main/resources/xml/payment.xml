@@ -1,0 +1,14 @@
+<Payments>
+    <Payment>
+        <paymentId>1</paymentId>
+        <bookingId>1</bookingId>
+        <amount>200.50</amount>
+        <paymentDate>2025-08-02</paymentDate>
+    </Payment>
+    <Payment>
+        <paymentId>2</paymentId>
+        <bookingId>2</bookingId>
+        <amount>350.00</amount>
+        <paymentDate>2025-08-06</paymentDate>
+    </Payment>
+</Payments>
