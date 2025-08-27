@@ -1,9 +1,19 @@
 package com.solvd.airport.models;
 
+import jakarta.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Booking {
+    @XmlAttribute(name = "id")
     private int bookingId;
+
+    @XmlElement(name = "passengerId")
     private int passengerId;
+
+    @XmlElement(name = "flightId")
     private int flightId;
+
+    @XmlElement(name = "bookingDate")
     private String bookingDate;
 
     public Booking() {
@@ -54,7 +64,7 @@ public class Booking {
                 "bookingId=" + bookingId +
                 ", passengerId=" + passengerId +
                 ", flightId=" + flightId +
-                ", bookingDate=" + bookingDate +
+                ", bookingDate='" + bookingDate + '\'' +
                 '}';
     }
 }

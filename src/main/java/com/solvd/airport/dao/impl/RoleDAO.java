@@ -19,7 +19,7 @@ public class RoleDAO implements IRoleDAO {
 
     private static final String INSERT_SQL = "INSERT INTO " + T + " (" + NAME + ") VALUES (?)";
     private static final String SELECT_BY_ID_SQL = "SELECT " + ID + "," + NAME + " FROM " + T + " WHERE " + ID + "=?";
-    private static final String SELECT_ALL_SQL = "SELECT " + ID + "," + NAME + " FROM " + T;
+    // private static final String SELECT_ALL_SQL = "SELECT " + ID + "," + NAME + " FROM " + T;
     private static final String UPDATE_SQL = "UPDATE " + T + " SET " + NAME + "=? WHERE " + ID + "=?";
     private static final String DELETE_SQL = "DELETE FROM " + T + " WHERE " + ID + "=?";
     ConnectionPool pool = ConnectionPool.getInstance();

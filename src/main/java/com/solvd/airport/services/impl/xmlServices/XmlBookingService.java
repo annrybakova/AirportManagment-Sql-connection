@@ -1,4 +1,4 @@
-package com.solvd.airport.services.impl;
+package com.solvd.airport.services.impl.xmlServices;
 
 import com.solvd.airport.models.Booking;
 import com.solvd.airport.utils.xmlParser.BookingSAXParser;

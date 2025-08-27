@@ -1,5 +1,8 @@
 package com.solvd.airport.models;
 
+// public record Role(int roleId, String roleName) {
+// }
+
 public class Role {
     private int roleId;
     private String roleName;

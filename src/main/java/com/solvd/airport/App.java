@@ -6,14 +6,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-// import com.solvd.airport.dao.impl.AirlineDAO;
-// import com.solvd.airport.dao.impl.AirportDAO;
-// import com.solvd.airport.dao.impl.FlightDAO;
-// import com.solvd.airport.dao.impl.LuggageDAO;
-// import com.solvd.airport.dao.impl.PassengerDAO;
-// import com.solvd.airport.dao.impl.RoleDAO;
-// import com.solvd.airport.dao.impl.StaffDAO;
-// import com.solvd.airport.dao.impl.TicketDAO;
 import com.solvd.airport.models.Airline;
 import com.solvd.airport.models.Airport;
 import com.solvd.airport.models.Flight;
@@ -29,8 +21,9 @@ import com.solvd.airport.services.impl.FlightService;
 import com.solvd.airport.services.impl.PassengerService;
 import com.solvd.airport.services.impl.StaffService;
 import com.solvd.airport.services.impl.TicketService;
-import com.solvd.airport.services.impl.XmlBookingService;
-import com.solvd.airport.services.impl.XmlPaymentService;
+import com.solvd.airport.services.impl.xmlServices.XmlBookingService;
+import com.solvd.airport.services.impl.xmlServices.XmlPaymentService;
+import com.solvd.airport.services.impl.xmlServices.XmlBookingJaxbService;
 
 public class App {
     private static final Logger logger = LogManager.getLogger(App.class);
@@ -89,7 +82,7 @@ public class App {
         ticketService.add(ticket);
 
         // hire Staff + Role
-        Role role = new Role();
+        Role role = new Role(1, "Gate Agent");
         role.setRoleName("Gate Agent");
         staffService.addRole(role);
 
@@ -101,8 +94,6 @@ public class App {
         // update seat
         ticket.setSeatNumber("14C");
         ticketService.add(ticket);
-
-        logger.info("Done.");
 
         // XML parsing
         XmlBookingService bookingService = new XmlBookingService();
@@ -116,5 +107,14 @@ public class App {
 
         logger.info("Parsed Payments:");
         payments.forEach(p -> logger.info(p.toString()));
+
+        XmlBookingJaxbService xmlBookingService = new XmlBookingJaxbService();
+
+        String bookingXml = "src/main/resources/xml/bookingXmlXsd.xml";
+        String bookingXsd = "src/main/resources/xsd/booking.xsd";
+
+        // Validate
+        var bookingsXmlXsd = xmlBookingService.readBookings(bookingXml, bookingXsd);
+        bookingsXmlXsd.forEach(b -> logger.info("XML Booking loaded: {}", b));
     }
 }
