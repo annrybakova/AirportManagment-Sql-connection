@@ -3,8 +3,9 @@ package com.solvd.airport.models;
 import jakarta.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "Booking", propOrder = { "bookingId", "passengerId", "flightId", "bookingDate" })
 public class Booking {
-    @XmlAttribute(name = "id")
+    @XmlElement(name = "bookingId")
     private int bookingId;
 
     @XmlElement(name = "passengerId")

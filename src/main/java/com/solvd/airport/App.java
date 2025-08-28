@@ -110,7 +110,7 @@ public class App {
 
         XmlBookingJaxbService xmlBookingService = new XmlBookingJaxbService();
 
-        String bookingXml = "src/main/resources/xml/bookingXmlXsd.xml";
+        String bookingXml = "src/main/resources/xml/booking.xml";
         String bookingXsd = "src/main/resources/xsd/booking.xsd";
 
         // Validate

@@ -4,11 +4,11 @@ import jakarta.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement(name = "bookings")
+@XmlRootElement(name = "Bookings")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Bookings {
 
-    @XmlElement(name = "booking")
+    @XmlElement(name = "Booking")
     private List<Booking> items = new ArrayList<>();
 
     public List<Booking> getItems() {
