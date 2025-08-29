@@ -21,6 +21,7 @@ import com.solvd.airport.services.impl.FlightService;
 import com.solvd.airport.services.impl.PassengerService;
 import com.solvd.airport.services.impl.StaffService;
 import com.solvd.airport.services.impl.TicketService;
+import com.solvd.airport.services.impl.jsonServices.CrewService;
 import com.solvd.airport.services.impl.xmlServices.XmlBookingService;
 import com.solvd.airport.services.impl.xmlServices.XmlPaymentService;
 import com.solvd.airport.services.impl.xmlServices.XmlBookingJaxbService;
@@ -108,6 +109,7 @@ public class App {
         logger.info("Parsed Payments:");
         payments.forEach(p -> logger.info(p.toString()));
 
+        // XML JAXB
         XmlBookingJaxbService xmlBookingService = new XmlBookingJaxbService();
 
         String bookingXml = "src/main/resources/xml/booking.xml";
@@ -116,5 +118,11 @@ public class App {
         // Validate
         var bookingsXmlXsd = xmlBookingService.readBookings(bookingXml, bookingXsd);
         bookingsXmlXsd.forEach(b -> logger.info("XML Booking loaded: {}", b));
+
+        //JSON
+        CrewService service = new CrewService();
+
+        service.loadCrews();
+        service.loadCrewRoles();
     }
 }
