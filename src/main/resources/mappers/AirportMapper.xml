@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.airport.mybatis.mappers.AirportMapper">
+
+    <resultMap id="AirportResultMap" type="com.solvd.airport.models.Airport">
+        <id property="airportId" column="id"/>
+        <result property="name" column="name"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="AirportResultMap">
+        SELECT id, name, city, country
+        FROM airports
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="AirportResultMap">
+        SELECT id, name, city, country
+        FROM airports
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.airport.models.Airport"
+            useGeneratedKeys="true" keyProperty="airportId">
+        INSERT INTO airports (name, city, country)
+        VALUES (#{name}, #{city}, #{country})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Airport">
+        UPDATE airports
+        SET name = #{name},
+            city = #{city},
+            country = #{country}
+        WHERE id = #{airportId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM airports WHERE id = #{id}
+    </delete>
+
+</mapper>

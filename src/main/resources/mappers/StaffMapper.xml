@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.airport.mybatis.mappers.StaffMapper">
+
+    <resultMap id="StaffResultMap" type="com.solvd.airport.models.Staff">
+        <id property="staffId" column="staff_id"/>
+        <result property="name" column="name"/>
+        <result property="roleId" column="role_id"/>
+        <result property="airportId" column="airport_id"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="StaffResultMap">
+        SELECT staff_id, name, role_id, airport_id
+        FROM staff
+        WHERE staff_id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="StaffResultMap">
+        SELECT staff_id, name, role_id, airport_id
+        FROM staff
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.airport.models.Staff"
+            useGeneratedKeys="true" keyProperty="staffId">
+        INSERT INTO staff (name, role_id, airport_id)
+        VALUES (#{name}, #{roleId}, #{airportId})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Staff">
+        UPDATE staff
+        SET name = #{name},
+            role_id = #{roleId},
+            airport_id = #{airportId}
+        WHERE staff_id = #{staffId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM staff WHERE staff_id = #{id}
+    </delete>
+
+    <select id="getByAirportId" parameterType="int" resultMap="StaffResultMap">
+        SELECT staff_id, name, role_id, airport_id
+        FROM staff
+        WHERE airport_id = #{airportId}
+    </select>
+
+</mapper>

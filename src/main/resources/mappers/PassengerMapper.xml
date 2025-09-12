@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.airport.mybatis.mappers.PassengerMapper">
+
+    <resultMap id="PassengerResultMap" type="com.solvd.airport.models.Passenger">
+        <id property="passengerId" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="passportNumber" column="passport_number"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="PassengerResultMap">
+        SELECT id, name, email, passport_number
+        FROM passengers
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="PassengerResultMap">
+        SELECT id, name, email, passport_number
+        FROM passengers
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.airport.models.Passenger"
+            useGeneratedKeys="true" keyProperty="passengerId">
+        INSERT INTO passengers (name, email, passport_number)
+        VALUES (#{name}, #{email}, #{passportNumber})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Passenger">
+        UPDATE passengers
+        SET name = #{name},
+            email = #{email},
+            passport_number = #{passportNumber}
+        WHERE id = #{passengerId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM passengers WHERE id = #{id}
+    </delete>
+
+    <select id="getByEmail" parameterType="string" resultMap="PassengerResultMap">
+        SELECT id, name, email, passport_number
+        FROM passengers
+        WHERE email = #{email}
+    </select>
+
+</mapper>

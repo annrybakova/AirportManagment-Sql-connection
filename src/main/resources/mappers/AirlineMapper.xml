@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.airport.dao.mybatisimpl.AirlineMyBatisDAO">
+
+    <resultMap id="AirlineResult" type="com.solvd.airport.models.Airline">
+        <id property="airlineId" column="airline_id"/>
+        <result property="name" column="name"/>
+        <result property="country" column="country"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="AirlineResult">
+        SELECT airline_id, name FROM airlines WHERE airline_id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="AirlineResult">
+        SELECT airline_id, name, country FROM airlines
+    </select>
+
+    <insert id="add" parameterType="com.solvd.airport.models.Airline" useGeneratedKeys="true" keyProperty="airlineId">
+        INSERT INTO airlines (name, country) VALUES (#{name}, #{country})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Airline">
+        UPDATE airlines SET name=#{name}, country=#{country} WHERE airline_id=#{airlineId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM airlines WHERE airline_id=#{id}
+    </delete>
+
+</mapper>

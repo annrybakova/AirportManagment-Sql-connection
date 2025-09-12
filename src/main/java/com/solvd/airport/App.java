@@ -1,8 +1,10 @@
 package com.solvd.airport;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,11 +18,17 @@ import com.solvd.airport.models.Staff;
 import com.solvd.airport.models.Booking;
 import com.solvd.airport.models.Payment;
 import com.solvd.airport.models.Ticket;
-import com.solvd.airport.services.impl.AirportService;
-import com.solvd.airport.services.impl.FlightService;
-import com.solvd.airport.services.impl.PassengerService;
-import com.solvd.airport.services.impl.StaffService;
-import com.solvd.airport.services.impl.TicketService;
+// import com.solvd.airport.services.impl.AirportService;
+// import com.solvd.airport.services.impl.FlightService;
+// import com.solvd.airport.services.impl.PassengerService;
+// import com.solvd.airport.services.impl.StaffService;
+// import com.solvd.airport.services.impl.TicketService;
+import com.solvd.airport.services.mybatisimpl.AirportServiceMyBatis;
+import com.solvd.airport.services.mybatisimpl.FlightServiceMyBatis;
+import com.solvd.airport.services.mybatisimpl.PassengerServiceMyBatis;
+import com.solvd.airport.services.mybatisimpl.StaffServiceMyBatis;
+import com.solvd.airport.services.mybatisimpl.TicketServiceMyBatis;
+
 import com.solvd.airport.services.impl.jsonServices.CrewService;
 import com.solvd.airport.services.impl.xmlServices.XmlBookingService;
 import com.solvd.airport.services.impl.xmlServices.XmlPaymentService;
@@ -31,11 +39,17 @@ public class App {
 
     public static void main(String[] args) {
 
-        AirportService airportService = new AirportService();
-        FlightService flightService = new FlightService();
-        PassengerService passengerService = new PassengerService();
-        StaffService staffService = new StaffService();
-        TicketService ticketService = new TicketService();
+        // AirportService airportService = new AirportService();
+        // FlightService flightService = new FlightService();
+        // PassengerService passengerService = new PassengerService();
+        // StaffService staffService = new StaffService();
+        // TicketService ticketService = new TicketService();
+
+        AirportServiceMyBatis airportService = new AirportServiceMyBatis();
+        FlightServiceMyBatis flightService = new FlightServiceMyBatis();
+        PassengerServiceMyBatis passengerService = new PassengerServiceMyBatis();
+        StaffServiceMyBatis staffService = new StaffServiceMyBatis();
+        TicketServiceMyBatis ticketService = new TicketServiceMyBatis();
 
         // create Airline
         Airline airline = new Airline();
@@ -90,6 +104,7 @@ public class App {
         Staff staff = new Staff();
         staff.setName("John Peackle");
         staff.setRoleId(role.getRoleId());
+        staff.setAirportId(airport_a.getAirportId());
         staffService.add(staff);
 
         // update seat

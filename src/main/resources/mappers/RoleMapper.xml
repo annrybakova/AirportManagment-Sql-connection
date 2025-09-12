@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.solvd.airport.mybatis.mappers.RoleMapper">
+
+
+    <resultMap id="RoleResult" type="com.solvd.airport.models.Role">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="RoleResult">
+        SELECT role_id, role_name FROM roles WHERE role_id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="RoleResult">
+        SELECT role_id, role_name FROM roles
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.airport.models.Role" useGeneratedKeys="true" keyProperty="roleId">
+        INSERT INTO roles (role_name) VALUES (#{roleName})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Role">
+        UPDATE roles SET role_name=#{roleName} WHERE role_id=#{roleId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM roles WHERE role_id=#{id}
+    </delete>
+
+</mapper>

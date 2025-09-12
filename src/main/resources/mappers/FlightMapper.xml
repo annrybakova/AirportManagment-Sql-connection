@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.airport.mybatis.mappers.FlightMapper">
+
+    <!-- Map DB columns to Flight model -->
+    <resultMap id="FlightResultMap" type="com.solvd.airport.models.Flight">
+        <id property="flightId" column="id"/>
+        <result property="airlineId" column="airline_id"/>
+        <result property="departureAirportId" column="departure_airport_id"/>
+        <result property="arrivalAirportId" column="arrival_airport_id"/>
+        <result property="departureTime" column="departure_time" javaType="java.time.LocalDateTime"/>
+        <result property="arrivalTime" column="arrival_time" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+
+    <select id="getById" parameterType="int" resultMap="FlightResultMap">
+        SELECT id, airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time
+        FROM flights
+        WHERE id = #{id}
+    </select>
+
+    <select id="getAll" resultMap="FlightResultMap">
+        SELECT id, airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time
+        FROM flights
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.airport.models.Flight"
+            useGeneratedKeys="true" keyProperty="flightId">
+        INSERT INTO flights (airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time)
+        VALUES (#{airlineId}, #{departureAirportId}, #{arrivalAirportId},
+                #{departureTime}, #{arrivalTime})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Flight">
+        UPDATE flights
+        SET airline_id = #{airlineId},
+            departure_airport_id = #{departureAirportId},
+            arrival_airport_id = #{arrivalAirportId},
+            departure_time = #{departureTime},
+            arrival_time = #{arrivalTime}
+        WHERE id = #{flightId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM flights WHERE id = #{id}
+    </delete>
+
+</mapper>

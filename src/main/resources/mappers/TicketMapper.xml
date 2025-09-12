@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.solvd.airport.mybatis.mappers.TicketMapper">
+
+    <resultMap id="TicketResultMap" type="com.solvd.airport.models.Ticket">
+        <id property="ticketId" column="ticket_id"/>
+        <result property="passengerId" column="passenger_id"/>
+        <result property="flightId" column="flight_id"/>
+        <result property="seatNumber" column="seat_number"/>
+        <result property="price" column="price"/>
+    </resultMap>
+
+    <select id="getById" resultMap="TicketResultMap">
+        SELECT ticket_id, passenger_id, flight_id, seat_number, price
+        FROM Tickets
+        WHERE ticket_id = #{id}
+    </select>
+
+    <select id="getByPassengerId" resultMap="TicketResultMap">
+        SELECT ticket_id, passenger_id, flight_id, seat_number, price
+        FROM Tickets
+        WHERE passenger_id = #{passengerId}
+    </select>
+
+    <insert id="insert" parameterType="com.solvd.airport.models.Ticket">
+        INSERT INTO Tickets (passenger_id, flight_id, seat_number, price)
+        VALUES (#{passengerId}, #{flightId}, #{seatNumber}, #{price})
+    </insert>
+
+    <update id="update" parameterType="com.solvd.airport.models.Ticket">
+        UPDATE Tickets
+        SET passenger_id = #{passengerId},
+            flight_id = #{flightId},
+            seat_number = #{seatNumber},
+            price = #{price}
+        WHERE ticket_id = #{ticketId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM Tickets WHERE ticket_id = #{id}
+    </delete>
+
+</mapper>
