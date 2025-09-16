@@ -1,13 +1,12 @@
 package com.solvd.airport;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.apache.ibatis.io.Resources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.solvd.airport.factory.FactoryService;
 import com.solvd.airport.models.Airline;
 import com.solvd.airport.models.Airport;
 import com.solvd.airport.models.Flight;
@@ -18,20 +17,15 @@ import com.solvd.airport.models.Staff;
 import com.solvd.airport.models.Booking;
 import com.solvd.airport.models.Payment;
 import com.solvd.airport.models.Ticket;
-// import com.solvd.airport.services.impl.AirportService;
-// import com.solvd.airport.services.impl.FlightService;
-// import com.solvd.airport.services.impl.PassengerService;
-// import com.solvd.airport.services.impl.StaffService;
-// import com.solvd.airport.services.impl.TicketService;
-import com.solvd.airport.services.mybatisimpl.AirportServiceMyBatis;
-import com.solvd.airport.services.mybatisimpl.FlightServiceMyBatis;
-import com.solvd.airport.services.mybatisimpl.PassengerServiceMyBatis;
-import com.solvd.airport.services.mybatisimpl.StaffServiceMyBatis;
-import com.solvd.airport.services.mybatisimpl.TicketServiceMyBatis;
 
 import com.solvd.airport.services.impl.jsonServices.CrewService;
 import com.solvd.airport.services.impl.xmlServices.XmlBookingService;
 import com.solvd.airport.services.impl.xmlServices.XmlPaymentService;
+import com.solvd.airport.services.interfaces.IAirportService;
+import com.solvd.airport.services.interfaces.IFlightService;
+import com.solvd.airport.services.interfaces.IPassengerService;
+import com.solvd.airport.services.interfaces.IStaffService;
+import com.solvd.airport.services.interfaces.ITicketService;
 import com.solvd.airport.services.impl.xmlServices.XmlBookingJaxbService;
 
 public class App {
@@ -39,17 +33,11 @@ public class App {
 
     public static void main(String[] args) {
 
-        // AirportService airportService = new AirportService();
-        // FlightService flightService = new FlightService();
-        // PassengerService passengerService = new PassengerService();
-        // StaffService staffService = new StaffService();
-        // TicketService ticketService = new TicketService();
-
-        AirportServiceMyBatis airportService = new AirportServiceMyBatis();
-        FlightServiceMyBatis flightService = new FlightServiceMyBatis();
-        PassengerServiceMyBatis passengerService = new PassengerServiceMyBatis();
-        StaffServiceMyBatis staffService = new StaffServiceMyBatis();
-        TicketServiceMyBatis ticketService = new TicketServiceMyBatis();
+        IAirportService airportService = FactoryService.createAirportService();
+        IFlightService flightService = FactoryService.createFlightService();
+        IPassengerService passengerService = FactoryService.createPassengerService();
+        IStaffService staffService = FactoryService.createStaffService();
+        ITicketService ticketService = FactoryService.createTicketService();
 
         // create Airline
         Airline airline = new Airline();
@@ -70,12 +58,14 @@ public class App {
         airportService.add(airport_b);
 
         // create a Flight
-        Flight flight = new Flight();
-        flight.setAirlineId(airline.getAirlineId());
-        flight.setDepartureAirportId(airport_a.getAirportId());
-        flight.setArrivalAirportId(airport_b.getAirportId());
-        flight.setDepartureTime(LocalDateTime.now().plusDays(1));
-        flight.setArrivalTime(LocalDateTime.now().plusDays(1).plusHours(7));
+        Flight flight = new Flight.Builder()
+                .withAirlineId(airline.getAirlineId())
+                .fromAirport(airport_a.getAirportId())
+                .toAirport(airport_b.getAirportId())
+                .departAt(LocalDateTime.now().plusDays(1))
+                .arriveAt(LocalDateTime.now().plusDays(1).plusHours(7))
+                .build();
+
         flightService.scheduleFlight(flight);
 
         // create a Passenger + Luggage
@@ -134,7 +124,7 @@ public class App {
         var bookingsXmlXsd = xmlBookingService.readBookings(bookingXml, bookingXsd);
         bookingsXmlXsd.forEach(b -> logger.info("XML Booking loaded: {}", b));
 
-        //JSON
+        // JSON
         CrewService service = new CrewService();
 
         service.loadCrews();

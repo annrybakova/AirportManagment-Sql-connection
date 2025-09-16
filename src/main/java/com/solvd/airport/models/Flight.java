@@ -13,14 +13,29 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(int id, int airlineId, int departureAirportId, int arrivalAirportId, LocalDateTime departureTime,
-            LocalDateTime arrivalTime) {
-        this.id = id;
-        this.airlineId = airlineId;
-        this.departureAirportId = departureAirportId;
-        this.arrivalAirportId = arrivalAirportId;
-        this.departureTime = departureTime;
-        this.arrivalTime = arrivalTime;
+    private Flight(Builder b) {
+        this.id = b.id;
+        this.airlineId = b.airlineId;
+        this.departureAirportId = b.departureAirportId;
+        this.arrivalAirportId = b.arrivalAirportId;
+        this.departureTime = b.departureTime;
+        this.arrivalTime = b.arrivalTime;
+    }
+
+    public static class Builder {
+        private int id;
+        private int airlineId;
+        private int departureAirportId;
+        private int arrivalAirportId;
+        private LocalDateTime departureTime;
+        private LocalDateTime arrivalTime;
+
+        public Builder withAirlineId(int id){ this.airlineId = id; return this; }
+        public Builder fromAirport(int id){ this.departureAirportId = id; return this; }
+        public Builder toAirport(int id){ this.arrivalAirportId = id; return this; }
+        public Builder departAt(LocalDateTime dt){ this.departureTime = dt; return this; }
+        public Builder arriveAt(LocalDateTime dt){ this.arrivalTime = dt; return this; }
+        public Flight build(){ return new Flight(this); }
     }
 
     public int getFlightId() {
