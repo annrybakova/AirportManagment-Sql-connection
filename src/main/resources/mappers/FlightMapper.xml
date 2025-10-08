@@ -7,7 +7,7 @@
 
     <!-- Map DB columns to Flight model -->
     <resultMap id="FlightResultMap" type="com.solvd.airport.models.Flight">
-        <id property="flightId" column="id"/>
+        <id property="flightId" column="flight_id"/>
         <result property="airlineId" column="airline_id"/>
         <result property="departureAirportId" column="departure_airport_id"/>
         <result property="arrivalAirportId" column="arrival_airport_id"/>
@@ -16,13 +16,13 @@
     </resultMap>
 
     <select id="getById" parameterType="int" resultMap="FlightResultMap">
-        SELECT id, airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time
+        SELECT flight_id, airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time
         FROM flights
-        WHERE id = #{id}
+        WHERE flight_id = #{id}
     </select>
 
     <select id="getAll" resultMap="FlightResultMap">
-        SELECT id, airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time
+        SELECT flight_id, airline_id, departure_airport_id, arrival_airport_id, departure_time, arrival_time
         FROM flights
     </select>
 
@@ -40,11 +40,11 @@
             arrival_airport_id = #{arrivalAirportId},
             departure_time = #{departureTime},
             arrival_time = #{arrivalTime}
-        WHERE id = #{flightId}
+        WHERE flight_id = #{flightId}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM flights WHERE id = #{id}
+        DELETE FROM flights WHERE flight_id = #{flight_id}
     </delete>
 
 </mapper>

@@ -6,20 +6,20 @@
 <mapper namespace="com.solvd.airport.mybatis.mappers.AirportMapper">
 
     <resultMap id="AirportResultMap" type="com.solvd.airport.models.Airport">
-        <id property="airportId" column="id"/>
+        <id property="airportId" column="airport_id"/>
         <result property="name" column="name"/>
         <result property="city" column="city"/>
         <result property="country" column="country"/>
     </resultMap>
 
     <select id="getById" parameterType="int" resultMap="AirportResultMap">
-        SELECT id, name, city, country
+        SELECT airport_id, name, city, country
         FROM airports
-        WHERE id = #{id}
+        WHERE airport_id = #{id}
     </select>
 
     <select id="getAll" resultMap="AirportResultMap">
-        SELECT id, name, city, country
+        SELECT airport_id, name, city, country
         FROM airports
     </select>
 
@@ -34,11 +34,11 @@
         SET name = #{name},
             city = #{city},
             country = #{country}
-        WHERE id = #{airportId}
+        WHERE airport_id = #{airportId}
     </update>
 
     <delete id="delete" parameterType="int">
-        DELETE FROM airports WHERE id = #{id}
+        DELETE FROM airports WHERE airport_id = #{id}
     </delete>
 
 </mapper>

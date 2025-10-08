@@ -13,8 +13,12 @@
         <result property="price" column="price"/>
     </resultMap>
 
-    <select id="getById" resultMap="TicketResultMap">
-        SELECT ticket_id, passenger_id, flight_id, seat_number, price
+    <select id="getById" parameterType="int" resultType="com.solvd.airport.models.Ticket">
+        SELECT ticket_id AS ticketId,
+               passenger_id AS passengerId,
+               flight_id AS flightId,
+               seat_number AS seatNumber,
+               price
         FROM Tickets
         WHERE ticket_id = #{id}
     </select>
@@ -25,7 +29,7 @@
         WHERE passenger_id = #{passengerId}
     </select>
 
-    <insert id="insert" parameterType="com.solvd.airport.models.Ticket">
+    <insert id="insert" parameterType="com.solvd.airport.models.Ticket" useGeneratedKeys="true" keyProperty="ticketId">
         INSERT INTO Tickets (passenger_id, flight_id, seat_number, price)
         VALUES (#{passengerId}, #{flightId}, #{seatNumber}, #{price})
     </insert>
